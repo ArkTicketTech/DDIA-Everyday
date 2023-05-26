@@ -4,9 +4,9 @@
 
 set -x
 
-filename=$(git status -s | grep "^A " )
+filename=$(git status -s | grep "sainas.md" )
 
-if [[ $(grep -c "^A " <<< $filename) -ne 1 ]]; then
+if [[ $(grep -c "^?? " <<< $filename) -ne 1 ]]; then
     echo "Expected one file, but got $(grep -c "^A " <<< $filename)"
     exit 1
 fi
@@ -16,13 +16,12 @@ if [[ $(grep -c "sainas.md" <<< $filename) -ne 1 ]]; then
     exit 1
 fi
 
-filename=$(sed 's/^A  //' <<< $filename)
+filename=$(sed 's/^?? //' <<< $filename)
 
-echo "Will push $filename to main"
 git checkout main || exit 1
 git pull || exit 1
+echo "Will push $filename to main"
 git add $filename || exit 1
 git commit -m "Create sainas.md" || exit 1
 git push || exit 1
 echo "Pushed to main"
-git checkout sainas-scripts

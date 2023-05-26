@@ -16,8 +16,12 @@ if [[ $(grep -c "sainas.md" <<< $filename) -ne 1 ]]; then
     exit 1
 fi
 
-echo "Will push $(sed 's/^A  //' <<< $filename) to main"
+filename=$(sed 's/^A  //' <<< $filename)
+
+echo "Will push $filename to main"
 git checkout main || exit 1
+git pull || exit 1
+git add $filename || exit 1
 git commit -m "Create sainas.md" || exit 1
 git push || exit 1
 echo "Pushed to main"

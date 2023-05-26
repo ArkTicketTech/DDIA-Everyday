@@ -17,6 +17,4 @@ echo target_filepath: $target_filepath
 
 mv temp_sainas.md $target_filepath
 
-git add $target_filepath
-
 git status -s

@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import os
 import datetime
 
@@ -10,9 +12,16 @@ with open(reader_path) as f:
     users = [line.strip() for line in f.readlines()]
 
 # 获取当前日期和前两天日期
-today = datetime.date.today()
+# timezone UTC+8
+beijing_timezone = datetime.timezone(datetime.timedelta(hours=8))
+today = datetime.datetime.now(beijing_timezone).date()
 yesterday = today - datetime.timedelta(days=1)
 day_before_yesterday = today - datetime.timedelta(days=2)
+print(
+    "今天是：{}, 检查过去两天打卡情况: {} {}".format(
+        today.isoformat(), yesterday.isoformat(), day_before_yesterday.isoformat()
+    )
+)
 
 missed = 0
 

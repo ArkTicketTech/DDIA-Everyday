@@ -7,7 +7,7 @@ set -x
 filename=$(git status -s | grep "sainas.md" )
 
 if [[ $(grep -c "^?? " <<< $filename) -ne 1 ]]; then
-    echo "Expected one file, but got $(grep -c "^A " <<< $filename)"
+    echo "Expected one file, but got $(grep -c "^?? " <<< $filename)"
     exit 1
 fi
 

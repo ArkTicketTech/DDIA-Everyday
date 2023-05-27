@@ -51,4 +51,4 @@ for user in users:
         missed = missed + 1
         print(f'{user} 今天没有打卡！')
 
-print(f'当前{len(users)}位同学参与打卡，{missed}位老板缺卡，缺卡率：{missed/len(users)*100:.2f}%。请发2元红包{len(users)-1}份，再发一个2元红包给我。谢谢老板！')
+print(f'当前{len(users)}位同学参与打卡，{missed}位老板缺卡，缺卡率：{missed/len(users)*100:.2f}%。请发2元红包{len(users)}份。谢谢老板！')

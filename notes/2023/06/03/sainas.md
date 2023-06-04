@@ -61,3 +61,20 @@ Logstructured approaches are simpler in this regard, because they do all the mer
 - "nearby key ranges to be nearby on disk" not required, but good for key range scan read. Many B-trees implement, but hard to maintain. LSM easiler to maintain since it rewrites during merge.
 - Additional pointer: reference to sibling pages, also help scanning
 - B-tree variants *"fractal trees"* borrow some log-structured ideas to reduce disk seeks
+B-tree variants *"fractal trees"* borrow some log-structured ideas to reduce disk seeks
+
+> fractal trees: a write-optimized data structure
+>
+> Why B-tree slow? Only part of the tree fit into memory. Every write need I/O to find the key
+>
+> B-trees node = pivot & pointer
+>
+> Fractal  node = pivot & pointer & **buffers**
+>
+> - in the root node, find out which child the write SHOULD traverse down
+> - serialize the pending operation into the buffer
+> - if the buffer associated with that child has space, **return**. If the node’s buffer has no space, **flush** the pending operations in the buffer down a level, thereby making space for future writes.
+>
+> Why is it faster? Reduced I/O. Do an I/O for not one row, but many rows
+>
+> Another interesting thing is if everything fits in memory, then Fractal Tree indexes are not providing any algorithmic advantage over B-Trees for write performance.

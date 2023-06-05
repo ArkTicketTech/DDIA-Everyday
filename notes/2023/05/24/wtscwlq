@@ -1,0 +1,50 @@
+#### 负载增加时，如何保持系统的良好性能
+
+也就是如何保证系统的可拓展性
+
+1. 纵向扩展：转向更强大的机器
+2. 横向扩展：将负载分布到多台小机器上
+3. 弹性系统：检测到负载增加时自动增加计算资源
+4. 跨多台机器部署无状态服务比较简单，但是把带状态的数据系统从单节点变成分布式配置则可能引入许多额外复杂度。因此，应该尽量将数据库放在单个节点上。
+
+### 可维护性
+
+主要包含三个方面：
+
+- **可维护性（Operability）**便于运维团队无痛接手。
+- **简洁性（Simplicity）** 便于新手开发平滑上手：这需要一个合理的抽象，并尽量消除各种复杂度。如，层次化抽象。
+- **可演化性（Evolvability）** 便于后面需求快速适配：避免耦合过紧，将代码绑定到某种实现上。也称为**可扩展性（extensibility）**，**可修改性（modifiability）** 或**可塑性（plasticity）**。
+
+# 第二章
+
+#### 什么是数据模型？
+
+> A **data model** is an [abstract model](https://en.wikipedia.org/wiki/Abstract_model) that organizes elements of [data](https://en.wikipedia.org/wiki/Data) and standardizes how they relate to one another and to the properties of real-world entities. 
+>
+> 维基百科
+
+>如何组织数据，如何标准化关系，如何关联现实。
+
+对于不同层次的开发者来说，经常接触的数据模型是不同的
+
+<img src="https://wtsclwq.oss-cn-beijing.aliyuncs.com/image-20230524224726173.png" alt="image-20230524224726173" style="zoom:33%;" />
+
+1. 对于业务开发者，直面数据结构（data structure），用来抽象现实中的具体问题，比如Person类
+2. 对于数据库的设计人员，也许是专门的DBA或者是负责设计数据库模型的开发人员，将上层提供的数据结构对应为数据模型（data model）
+3. 对于DB内核开发人员，组织一个record和table或者是kv在磁盘或者网络中的字节（byte）流如何存储和传输
+4. 作为**硬件工程师**，你需要将字节流表示为二极管的电位（内存）、磁场中的磁极（磁盘）、光纤中的光信号（网络）。
+
+### 关系模型和文档模型
+
+#### 关系模型和面向对象的冲突
+
+面向对象的思想其实和关系模型比韩国不完全匹配，因为面向对象天然具有嵌套性，学校:班级:学生，而关系模型只能用外键的方式表示这种嵌套。在开发的时候手动转换就很麻烦，后来有了ORM框架一定程度缓解了这个问题。
+
+> 换另一个角度来说，关系模型很难直观的表示**一对多**的关系。比如简历上，一个人可能有多段教育经历和多段工作经历。
+
+一图以蔽之
+
+<img src="https://wtsclwq.oss-cn-beijing.aliyuncs.com/ch02-fig01.png" alt="ddia2-bill-resume.png" style="zoom:20%;" />
+
+但这种时候用XML或这Json就很简单，就像是在直接存储左侧的那些文字一样
+

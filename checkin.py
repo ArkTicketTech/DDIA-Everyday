@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import os
 import datetime
 
@@ -10,9 +12,16 @@ with open(reader_path) as f:
     users = [line.strip() for line in f.readlines()]
 
 # 获取当前日期和前两天日期
-today = datetime.date.today()
+# timezone UTC+8
+beijing_timezone = datetime.timezone(datetime.timedelta(hours=8))
+today = datetime.datetime.now(beijing_timezone).date()
 yesterday = today - datetime.timedelta(days=1)
 day_before_yesterday = today - datetime.timedelta(days=2)
+print(
+    "今天是：{}, 检查过去两天打卡情况: {} {}".format(
+        today.isoformat(), yesterday.isoformat(), day_before_yesterday.isoformat()
+    )
+)
 
 missed = 0
 
@@ -21,7 +30,7 @@ for user in users:
     # 检查最近两天的所有文件名
     found = False
     for folder in [yesterday, day_before_yesterday]:
-        folder_path = folder.strftime('reading notes/%Y/%-m/%-d')
+        folder_path = folder.strftime('notes/%Y/%m/%d')
         folder_path = os.path.join(script_dir, folder_path)
         for root, dirs, files in os.walk(folder_path):
             for file in files:
@@ -42,4 +51,4 @@ for user in users:
         missed = missed + 1
         print(f'{user} 今天没有打卡！')
 
-print(f'当前{len(users)}位同学参与打卡，{missed}位老板缺卡，缺卡率：{missed/len(users)*100:.2f}%。请发2元红包{len(users)-2}份，再发一个3元红包给我。谢谢老板！')
+print(f'当前{len(users)}位同学参与打卡，{missed}位老板缺卡，缺卡率：{missed/len(users)*100:.2f}%。请发2元红包{len(users)}份。谢谢老板！')

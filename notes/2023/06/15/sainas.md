@@ -39,6 +39,10 @@ No tag numbers. No need manual mapping and avoiding used numbers
 
 **Code generation and dynamically typed languages**
 
-code generation is an unnecessarily obstacle
+Code generation are more for statically typed languages, not for dynamically typed languages, since they don't have compile-time type checker
 
-self-describing
+For Avro (dynamically generated schema from db table), code generation is unnecessary
+
+Avro container file is self-describing (embeds with writer's schema)
+
+

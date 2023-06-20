@@ -1,4 +1,4 @@
-P136-P140
+P136-P144
 
 
 **RPC (remote procedure calls): Data encoding and evolution**
@@ -74,3 +74,17 @@ These properties are hugely beneficial for "*evolvability*"
 
 Backward and forward compatibility
 (Must assume different versions are running)
+
+| Data encoding format                                         | Compatibility                                                |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Programming language–specific encodings                      | Often failed to provide                                      |
+| Textual: JSON, XML, CSV                                      | Depends. Vague on datatype thus need to be careful with numbers and binary strings |
+| Binary schema-driven format: Thrift, Protocol Buffers and Avro | Compact. Clear defined compatibility semantics. Schema can be useful doc. Code generation in statically typed language. Not human-readable |
+
+| Dataflow                     | Case                                                         |
+| ---------------------------- | ------------------------------------------------------------ |
+| Database                     | Writer encodes, reader decodes                               |
+| RPC and RESTful API          | Client encodes requests, server decodes, encodes the response. Client decodes response. |
+| Asynchronous message passing | Sender encodes, recipient decodes                            |
+
+
